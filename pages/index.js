@@ -8,25 +8,26 @@ import moment from "moment";
 
 const localizer = globalizeLocalizer(globalize);
 
+
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [name, setName] = useState("World");
+  const [appointments, setAppointments] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await Axios.get("/api/hello");
+      const response = await Axios.get("/api/calendar");
 
       if (response) {
         setLoading(false);
 
-        debugger;
+
 
         const test = response.data.appointments.map((item) => ({
           start: moment(item.datetime).toDate(),
           end: moment(item.datetime).add(item.duration, "minutes").toDate(),
           title: item.firstName,
         }));
-        setName(test);
+        setAppointments(test);
       }
     };
     fetchData();
@@ -45,7 +46,7 @@ export default function Home() {
   ];
 
   console.log(myEventsList);
-  console.log(name);
+  console.log(appointments);
 
   return (
     <>
@@ -53,14 +54,17 @@ export default function Home() {
 
       <Calendar
         localizer={localizer}
-        events={name}
+        events={appointments}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500 }}
+        style={{ height: 700 }}
         defaultView="week"
+        view="week"
         toolbar={false}
         selectable="ignoreEvents"
         drilldownView={null}
+        min={new Date(1972, 0, 1, 7, 0, 0, 0)}
+        max={new Date(2099, 0, 1, 22, 0, 0, 0)}
       />
 
       {/* {name.map((item) => (
