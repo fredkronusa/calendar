@@ -27,6 +27,12 @@ a {
   text-align: center;
 }
 
+.loading {
+  text-align: center;
+  color: #3174ad;
+  font-weight: bold;
+}
+
 button.rbc-btn {
   overflow: visible;
   text-transform: none;
