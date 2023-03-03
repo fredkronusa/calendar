@@ -1,33 +1,29 @@
 import styles from "../styles/Home.module.css";
 
 import React, { useState, useEffect } from "react";
-import { Calendar, globalizeLocalizer } from "react-big-calendar";
 import Axios from "axios";
-import globalize from "globalize";
-import moment from "moment";
-
-const localizer = globalizeLocalizer(globalize);
-
+import { Scheduler } from "@aldabil/react-scheduler";
+import { addMinutes } from "date-fns";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [appointments, setAppointments] = useState(null);
+  const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await Axios.get("/api/calendar");
 
       if (response) {
-        setLoading(false);
-
-
-
-        const test = response.data.appointments.map((item) => ({
-          start: moment(item.datetime).toDate(),
-          end: moment(item.datetime).add(item.duration, "minutes").toDate(),
-          title: item.firstName,
+        const data = response.data.results.map((item) => ({
+          start: new Date(item.datetime),
+          end: addMinutes(new Date(item.datetime), item.duration),
+          title: item.name,
+          event_id: item.id,
+          description: item.type,
         }));
-        setAppointments(test);
+
+        setAppointments(data);
+        setLoading(false);
       }
     };
     fetchData();
@@ -37,41 +33,43 @@ export default function Home() {
     return <p>Loading...</p>;
   }
 
-  const myEventsList = [
-    {
-      start: moment().toDate(),
-      end: moment().add(1, "hour").toDate(),
-      title: "Some title",
-    },
-  ];
-
-  console.log(myEventsList);
-  console.log(appointments);
-
   return (
     <>
       <p>Hello, Kate</p>
-
-      <Calendar
-        localizer={localizer}
-        events={appointments}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 700 }}
-        defaultView="week"
+      <Scheduler
         view="week"
-        toolbar={false}
-        selectable="ignoreEvents"
-        drilldownView={null}
-        min={new Date(1972, 0, 1, 7, 0, 0, 0)}
-        max={new Date(2099, 0, 1, 22, 0, 0, 0)}
+        month={null}
+        week={{
+          weekDays: [2, 3, 4, 5, 6],
+          weekStartOn: 0,
+          startHour: 7,
+          endHour: 20,
+          step: 60,
+          navigation: false,
+          cellRenderer: ({ height, start, onClick, ...props }) => {}
+        }}
+        navigation={false}
+        disableViewNavigator={false}
+        editable={false}
+        deletable={false}
+        draggable={false}
+        events={appointments}
+        viewerExtraComponent={(_fields, event) => {
+          return (
+            <>
+              {appointments.map((field, i) => {
+                if (event.event_id === field.event_id) {
+                  return (
+                    <p key={`field_${i}`}>
+                      {field.description} </p>
+                  );
+                }
+              }
+              )}
+            </>
+          );
+        }}
       />
-
-      {/* {name.map((item) => (
-        <p key={item.id}>
-          {item.firstName} - {item.datetime} - {item.type}
-        </p>
-      ))} */}
     </>
   );
 }

@@ -1,7 +1,6 @@
 // pages/api/hello.ts
 import Acuity from 'acuityscheduling';
-import { startOfWeek, endOfWeek, getDate, startOfDay, format } from "date-fns";
-import moment from "moment";
+import { startOfWeek, endOfWeek, startOfDay, format } from "date-fns";
 
 export default (request, response) => {
   var acuity = Acuity.basic({
@@ -22,7 +21,14 @@ export default (request, response) => {
       if (err) {
         return console.error(err);
       } else {
-        response.status(200).send({ appointments });
+        const results = appointments.map((item) => ({
+          datetime: item.datetime,
+          duration: item.duration,
+          name: `${item.firstName} ${item.lastName}`,
+          id: item.id,
+          type: item.type,
+        }));
+        response.status(200).send({ results });
       }
     }
   );
