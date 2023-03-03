@@ -32,7 +32,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className="calendar-wrapper">
       <Scheduler
         view="week"
         month={null}
@@ -46,7 +46,6 @@ export default function Home() {
           cellRenderer: ({ height, start, onClick, ...props }) => {}
         }}
         navigation={false}
-        disableViewNavigator={false}
         editable={false}
         deletable={false}
         draggable={false}
@@ -67,6 +66,6 @@ export default function Home() {
           );
         }}
       />
-    </>
+    </div>
   );
 }

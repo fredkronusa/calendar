@@ -33,6 +33,10 @@ a {
   font-weight: bold;
 }
 
+.calendar-wrapper {
+  margin: 0 12px;
+}
+
 button.rbc-btn {
   overflow: visible;
   text-transform: none;
