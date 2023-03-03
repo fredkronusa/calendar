@@ -42,10 +42,9 @@ export default function Home() {
           startHour: 7,
           endHour: 20,
           step: 60,
-          navigation: false,
           cellRenderer: ({ height, start, onClick, ...props }) => {}
         }}
-        navigation={false}
+        navigation={true}
         editable={false}
         deletable={false}
         draggable={false}

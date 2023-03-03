@@ -1,6 +1,6 @@
 // pages/api/hello.ts
 import Acuity from 'acuityscheduling';
-import { startOfWeek, endOfWeek, startOfDay, format } from "date-fns";
+import { startOfWeek, addDays , startOfDay, format } from "date-fns";
 
 export default (request, response) => {
   var acuity = Acuity.basic({
@@ -10,7 +10,7 @@ export default (request, response) => {
 
   const today = startOfDay(new Date());
   const weekStart = startOfWeek(today, { weekStartsOn: 2 });
-  const weekFinish = endOfWeek(today, { weekStartsOn: 1 });
+  const weekFinish = addDays(weekStart, 14);
 
   const minDate = format(weekStart, "MMMM dd',' yyyy");
   const maxDate = format(weekFinish, "MMMM dd',' yyyy");
