@@ -1,5 +1,3 @@
-import styles from "../styles/Home.module.css";
-
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { Scheduler } from "@aldabil/react-scheduler";
@@ -35,7 +33,6 @@ export default function Home() {
 
   return (
     <>
-      <p>Hello, Kate</p>
       <Scheduler
         view="week"
         month={null}

@@ -15,11 +15,16 @@ a {
   box-sizing: border-box;
 }
 
-@charset "UTF-8";
-.rbc-btn {
-  color: inherit;
-  font: inherit;
-  margin: 0;
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  padding: 10px;
+  width: 150px;
+  text-align: center;
 }
 
 button.rbc-btn {
