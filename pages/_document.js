@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <div className="logo-wrapper"><img src='logo.jpg' className='logo'/></div>
+      <div className="logo-wrapper"><img src='logo.png' className='logo'/></div>
       <body>
         <Main />
         <NextScript />

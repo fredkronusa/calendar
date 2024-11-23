@@ -39,8 +39,8 @@ export default function Home() {
         week={{
           weekDays: [2, 3, 4, 5, 6],
           weekStartOn: 0,
-          startHour: 7,
-          endHour: 20,
+          startHour: 8,
+          endHour: 19,
           step: 60,
           cellRenderer: ({ height, start, onClick, ...props }) => {}
         }}
